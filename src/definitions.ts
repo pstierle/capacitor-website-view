@@ -1,62 +1,70 @@
-import { PluginListenerHandle } from '@capacitor/core';
+import type { PluginListenerHandle } from '@capacitor/core';
 
 export interface IWebviewOverlayPlugin {
-    /**
-     * Open a webview with the given URL
-     */
-    open(options: OpenOptions): Promise<void>;
+  /**
+   * Open a webview with the given URL
+   */
+  open(options: OpenOptions): Promise<void>;
 
-    /**
-     * Close an open webview.
-     */
-    close(): Promise<void>;
+  /**
+   * Close an open webview.
+   */
+  close(): Promise<void>;
 
-    /**
-     * Load a url in the webview.
-     */
-    loadUrl(options: {url: string}): Promise<void>;
+  /**
+   * Load a url in the webview.
+   */
+  loadUrl(options: { url: string }): Promise<void>;
 
-    /**
-     * Get snapshot image
-     */
-    getSnapshot(): Promise<{src: string}>;
+  /**
+   * Get snapshot image
+   */
+  getSnapshot(): Promise<{ src: string }>;
 
-    show(): Promise<void>;
-    hide(): Promise<void>;
+  show(): Promise<void>;
+  hide(): Promise<void>;
 
-    toggleFullscreen(): Promise<void>;
-    goBack(): Promise<void>;
-    goForward(): Promise<void>;
-    reload(): Promise<void>;
-    
-    handleNavigationEvent(options: {allow: boolean}): Promise<void>;
+  goBack(): Promise<void>;
+  goForward(): Promise<void>;
+  reload(): Promise<void>;
 
-    updateDimensions(options: Dimensions): Promise<void>;
+  handleNavigationEvent(options: { allow: boolean }): Promise<void>;
 
-    evaluateJavaScript(options: {javascript: string}): Promise<{result: string}>;
+  updateDimensions(options: Dimensions): Promise<void>;
 
-    addListener(eventName: 'pageLoaded' | 'updateSnapshot' | 'progress' | 'navigationHandler', listenerFunc: (...args: any[]) => void): PluginListenerHandle;
+  evaluateJavaScript(options: {
+    javascript: string;
+  }): Promise<{ result: string }>;
+
+  addListener(
+    eventName:
+      | 'pageLoaded'
+      | 'updateSnapshot'
+      | 'progress'
+      | 'navigationHandler',
+    listenerFunc: (...args: any[]) => void,
+  ): PluginListenerHandle;
 }
 
 interface OpenOptions extends Dimensions {
-    /**
-     * The URL to open the webview to
-     */
-    url: string;
+  /**
+   * The URL to open the webview to
+   */
+  url: string;
 
-    javascript?: string;
-    injectionTime?: ScriptInjectionTime;
-    userAgent?: string;
+  javascript?: string;
+  injectionTime?: ScriptInjectionTime;
+  userAgent?: string;
 }
 
 interface Dimensions {
-    width: number;
-    height: number;
-    x: number;
-    y: number;
+  width: number;
+  height: number;
+  x: number;
+  y: number;
 }
 
 export enum ScriptInjectionTime {
-    atDocumentStart,
-    atDocumentEnd
+  atDocumentStart,
+  atDocumentEnd,
 }

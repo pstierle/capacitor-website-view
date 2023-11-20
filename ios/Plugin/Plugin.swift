@@ -76,7 +76,7 @@ class WebviewOverlay: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 
     @objc func buttonAction(sender: UIButton!) {
-        plugin.toggleFullscreen()
+        
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -373,30 +373,6 @@ public class WebviewOverlayPlugin: CAPPlugin {
             }
             else {
                 call.resolve(["result": ""])
-            }
-        }
-    }
-
-    @objc func toggleFullscreen(_ call: CAPPluginCall? = nil) {
-        DispatchQueue.main.async {
-            if (self.webviewOverlay != nil) {
-                if (self.fullscreen) {
-                    let rect = CGRect(x: self.x, y: self.y, width: self.width, height: self.height)
-                    self.webviewOverlay.view.frame = rect
-                    self.fullscreen = false
-                    self.webviewOverlay.closeFullscreenButton.isHidden = true
-                }
-                else {
-                    let width = UIScreen.main.bounds.width
-                    let height = UIScreen.main.bounds.height
-                    let rect = CGRect(x: 0, y: 0, width: width, height: height)
-                    self.webviewOverlay.view.frame = rect
-                    self.fullscreen = true
-                    self.webviewOverlay.closeFullscreenButton.isHidden = false
-                }
-                if (call != nil) {
-                    call!.resolve()
-                }
             }
         }
     }
